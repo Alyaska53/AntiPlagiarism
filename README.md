@@ -1,11 +1,9 @@
 # AntiPlagiarism
 
-***
+### This project is being developed within **DevIncubator**
 
-#### This project is being developed within **DevIncubator**
+---
 
-***
-
-##### Developers:
+#### Developers:
 - Dmitry Buravkin
 - Elizaveta Sergeeva-Nekrasova
