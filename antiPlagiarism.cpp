@@ -133,25 +133,23 @@ void arrayCreation(char text[], string arrayOfWords[])
 	}
 }
 
-int shingleRepetition(string textWordsArray[], string fragmentWordsArray[], int textWordsCount, int fragmentWordsCount)
+int getCoincidencesNumber(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber)
 {
-	int matches = 0;
-	
-	for(int i = 0; i < (fragmentWordsCount - 2); i++) {
-		
-		for(int j = 0; j < (textWordsCount - 2); j++) {
-			
-			if((fragmentWordsArray[i] == textWordsArray[j]) 
-			and(fragmentWordsArray[i+1] == textWordsArray[j+1])
-			and(fragmentWordsArray[i+2] == textWordsArray[j+2])) {
-				
-				matches++;
+	int coincidences = 0;
+
+	for (int i = 0; i < (fragmentWordsNumber - 2); i++) {
+
+		for (int j = 0; j < (textWordsNumber - 2); j++) {
+			if ((fragmentWordsArray[i] == textWordsArray[j]) and
+				(fragmentWordsArray[i + 1] == textWordsArray[j + 1]) and
+				(fragmentWordsArray[i + 2] == textWordsArray[j + 2])) {
+
+				coincidences++;
 			}
 		}
 	}
-	
-	return matches;
-	
+
+	return coincidences;
 }
 
 
