@@ -120,9 +120,9 @@ void arrayCreation(char text[], string arrayOfWords[])
 	string word = "";
 	int index = 0;
 	
-	for(int i = 0; text[i] != '\0'; i++){
+	for(int i = 0; text[i] != '\0'; i++) {
 		
-		if(text[i] != ' '){
+		if(text[i] != ' ') {
 			word+=text[i];
 		}
 		else {
@@ -137,13 +137,14 @@ int shingleRepetition(string textWordsArray[], string fragmentWordsArray[], int 
 {
 	int matches = 0;
 	
-	for(int i = 0; i <= (fragmentWordsCount-2); i++){
+	for(int i = 0; i < (fragmentWordsCount - 2); i++) {
 		
-		for(int j = 0; j <= (textWordsCount-2); j++){
+		for(int j = 0; j < (textWordsCount - 2); j++) {
 			
 			if((fragmentWordsArray[i] == textWordsArray[j]) 
 			and(fragmentWordsArray[i+1] == textWordsArray[j+1])
-			and(fragmentWordsArray[i+2] == textWordsArray[j+2])){
+			and(fragmentWordsArray[i+2] == textWordsArray[j+2])) {
+				
 				matches++;
 			}
 		}
