@@ -115,21 +115,19 @@ int canonization(string text, char textArray[])
 	
 }
 
-void arrayCreation(char text[], string arrayOfWords[])
+void fillArray(string textWordsArray[], string canonizedText)
 {
 	string word = "";
 	int index = 0;
 	
-	for(int i = 0; text[i] != '\0'; i++) {
-		
-		if(text[i] != ' ') {
-			word+=text[i];
+	for (int i = 0; canonizedText[i] != '\0'; i++) {
+		if (canonizedText[i] != ' ') {
+			word += canonizedText[i];
+		} else {
+			textWordsArray[index] = word;
+			index++;
+			word = "";
 		}
-		else {
-			arrayOfWords[index] = word;
-				index++;
-				word = "";
-		}	
 	}
 }
 
