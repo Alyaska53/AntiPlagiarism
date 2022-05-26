@@ -67,13 +67,14 @@ int main()
 
 bool isSeparator(char c)
 {
-	
-    for(int i = 0; separator[i] != '\0'; i++) {
-    	if(c == separator[i]) {
-    		return true;
-    	}
-    }
-    
+	char separator[] = " ~`!@#$%^&*()-_=+,./{[]}}?";
+
+	for (int i = 0; separator[i] != '\0'; i++) {
+		if (c == separator[i]) {
+			return true;
+		}
+	}
+
 	return false;
 }
 
