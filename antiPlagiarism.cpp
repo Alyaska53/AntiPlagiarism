@@ -89,27 +89,37 @@ int getLength(string text)
 	return counter;
 }
 
-int canonization(string text, char textArray[])
+string canonize(string text, int textLength)
 {
+	string canonizedText = "";
 	int index = 0;
 	int wordsCounter = 0;
 	
 	for (int i = 0; text[i] != '\0'; i++) {
     	
-        if (!isSeparator(text[i])) {
-	        textArray[index] = text[i];
-	        index++;
-	    
-	        if (isSeparator(text[i + 1]) or text[i + 1] == '\0') {
-	            textArray[index] = ' ';
-	            index++;
+		if (!isSeparator(text[i])) {
+			canonizedText += text[i];
+			index++;
+
+			if (isSeparator(text[i + 1]) or text[i + 1] == '\0') {
+				canonizedText += ' ';
+				index++;
 	            wordsCounter++;
-        	}	
-        }
-    }
-    
-	for(int i = index; text[i] != '\0'; i++) {
-		textArray[i] = '\0';
+			}
+		}
+	}
+	
+	return canonizedText;
+}
+
+int getWordsNumber(string canonizedText)
+{
+	int wordsCounter = 0;
+
+	for (int i = 0; canonizedText[i] != '\0'; i++) {
+		if (canonizedText[i] == ' ' or canonizedText[i + 1] == '\0') {
+			wordsCounter++;
+		}
 	}
 	
 	return wordsCounter;
