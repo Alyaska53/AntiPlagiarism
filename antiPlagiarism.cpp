@@ -77,14 +77,14 @@ bool isSeparator(char c)
 	return false;
 }
 
-int length(string text)
+int getLength(string text)
 {
 	int counter = 0;
-	
-	for(int i = 0; text[i] != '\0'; i++) {
+
+	for (int i = 0; text[i] != '\0'; i++) {
 		counter++;
 	}
-	
+
 	return counter;
 }
 
