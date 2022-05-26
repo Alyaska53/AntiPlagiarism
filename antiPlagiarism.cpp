@@ -31,38 +31,45 @@
 #include <string>
 
 using namespace std;
+
+double antiPlagiarism(string text, string fragment);
 bool isSeparator(char c);
-int length(string text);
-int canonization(string text, char textArray[]);
-void arrayCreation(char text[], string arrayOfWords[]);
-int shingleRepetition(string textWordsArray[], string fragmentWordsArray[], int textWordsCount, int fragmentWordsCount);
-char separator[]=" ,.!?";
+int getLength(string text);
+string canonize(string text, int textLength);
+int getWordsNumber(string canonizedText);
+void fillArray(string textWordsArray[], string canonizedText);
+int getCoincidencesNumber(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber);
 
 int main()
 {
-	string text = "Hello  . My name    is Liza. I   am   23 years old. I like ??? programming! This is my first c++ project.";
-	string fragment = "Hello  . My name    is . I   am   23 years . I like ??? shopping! This is my first java project.";
-	
-	int textLength = length(text);
-	int fragmentLength = length(fragment);
-	
-	char canonizedText[textLength];
-	char canonizedFragment[fragmentLength];
-	
-	int textWordsCount = canonization(text, canonizedText);
-	int fragmentWordsCount = canonization(fragment, canonizedFragment);
-	
-	string textWordsArray[textWordsCount];
-	string fragmentWordsArray[fragmentWordsCount];
-	
-	arrayCreation(canonizedText, textWordsArray);
-	arrayCreation(canonizedFragment, fragmentWordsArray);
-	
-	int matches = shingleRepetition(textWordsArray, fragmentWordsArray, textWordsCount, fragmentWordsCount);
-	
-	cout << matches;
-	
+	string text = "I'm going to the shop to buy an apples";
+	string fragment = "I'm going to the shop to buy a bananas";
+
+	cout << "Result: " << antiPlagiarism(text, fragment);
+
 	return 0;
+}
+
+double antiPlagiarism(string text, string fragment)
+{
+	const int TEXT_LENGTH = getLength(text);
+	const int FRAGMENT_LENGTH = getLength(fragment);
+
+	string canonizedText = canonize(text, TEXT_LENGTH);
+	string canonizedFragment = canonize(fragment, FRAGMENT_LENGTH);
+
+	int textWordsNumber = getWordsNumber(canonizedText);
+	int fragmentWordsNumber = getWordsNumber(canonizedFragment);
+	
+	string textWordsArray[textWordsNumber];
+	string fragmentWordsArray[textWordsNumber];
+	
+	fillArray(textWordsArray, canonizedText);
+	fillArray(fragmentWordsArray, canonizedFragment);
+
+	int coincidences = getCoincidencesNumber(textWordsArray, fragmentWordsArray, textWordsNumber, fragmentWordsNumber);
+	
+	return coincidences * 1.0 / (fragmentWordsNumber - 2);
 }
 
 bool isSeparator(char c)
@@ -93,10 +100,8 @@ string canonize(string text, int textLength)
 {
 	string canonizedText = "";
 	int index = 0;
-	int wordsCounter = 0;
 	
 	for (int i = 0; text[i] != '\0'; i++) {
-    	
 		if (!isSeparator(text[i])) {
 			canonizedText += text[i];
 			index++;
@@ -104,7 +109,6 @@ string canonize(string text, int textLength)
 			if (isSeparator(text[i + 1]) or text[i + 1] == '\0') {
 				canonizedText += ' ';
 				index++;
-	            wordsCounter++;
 			}
 		}
 	}
@@ -123,7 +127,6 @@ int getWordsNumber(string canonizedText)
 	}
 	
 	return wordsCounter;
-	
 }
 
 void fillArray(string textWordsArray[], string canonizedText)
@@ -160,6 +163,3 @@ int getCoincidencesNumber(string textWordsArray[], string fragmentWordsArray[], 
 
 	return coincidences;
 }
-
-
-
