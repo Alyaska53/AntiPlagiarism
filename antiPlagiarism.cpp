@@ -89,7 +89,7 @@ bool isSmallWord(string word)
 {
 	int wordLength = getLength(word);
 	
-	if(wordLength < 3) {
+	if (wordLength < 3) {
 		return true;
 	}
 	
