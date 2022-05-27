@@ -38,8 +38,8 @@ bool isNumber(char c);
 int getLength(string text);
 void toLowerCase(char canonizedText[]) ;
 void canonize(string text, char canonizedText[]);
-int getWordsNumber(string canonizedText);
-void fillArray(string textWordsArray[], string canonizedText);
+int getWordsNumber(char canonizedText[]);
+void fillArray(string textWordsArray[], char canonizedText[]);
 int getCoincidencesNumber(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber);
 
 int main()
@@ -146,7 +146,7 @@ void canonize(string text, char canonizedText[])
 	toLowerCase(canonizedText);
 }
 
-int getWordsNumber(string canonizedText)
+int getWordsNumber(char canonizedText[])
 {
 	int wordsCounter = 0;
 
@@ -159,7 +159,7 @@ int getWordsNumber(string canonizedText)
 	return wordsCounter;
 }
 
-void fillArray(string textWordsArray[], string canonizedText)
+void fillArray(string textWordsArray[], char canonizedText[])
 {
 	string word = "";
 	int index = 0;
