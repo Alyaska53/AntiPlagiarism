@@ -158,13 +158,13 @@ void cutWrongWords(char canonizedText[])
 		if (canonizedText[i] != ' ') {
 			word += canonizedText[i];
 			
-			if (canonizedText[i+1] == ' ' or canonizedText[i+1] == '\0') {
-				if(!isSmallWord(word) and !isWrongWord(word)) {
+			if (canonizedText[i + 1] == ' ' or canonizedText[i + 1] == '\0') {
+				if (!isSmallWord(word) and !isWrongWord(word)) {
 					int wordLength = getLength(word);
 				
-					for(int i = 0; i < wordLength; i++) {
-					canonizedText[index] = word[i];
-					index++;
+					for (int i = 0; i < wordLength; i++) {
+						canonizedText[index] = word[i];
+						index++;
 					}
 					
 					canonizedText[index] = ' ';
