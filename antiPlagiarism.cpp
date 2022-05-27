@@ -170,6 +170,7 @@ void cutWrongWords(char canonizedText[])
 					canonizedText[index] = ' ';
 					index++;
 				}
+				
 				word = "";
 			}
 		}
