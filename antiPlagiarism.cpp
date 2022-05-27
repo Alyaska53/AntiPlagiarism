@@ -138,8 +138,6 @@ void canonize(string text, char canonizedText[])
 		    
 			if (isSeparator(text[i + 1]) or isNumber(text[i + 1]) or text[i + 1] == '\0') {
 				canonizedText[index] = ' ';
-			}
-			
 				index++;
 			}
 		}
