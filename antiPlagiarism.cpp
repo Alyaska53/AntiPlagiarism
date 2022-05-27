@@ -78,7 +78,7 @@ double antiPlagiarism(string text, string fragment)
 
 	int coincidences = getCoincidencesNumber(textWordsArray, fragmentWordsArray, textWordsNumber, fragmentWordsNumber);
 	
-	return coincidences * 1.0 / (fragmentWordsNumber - 2);
+	return coincidences * 100.0 / (fragmentWordsNumber - 2); //TODO: round to two decimal places
 }
 
 bool isSeparator(char c)
@@ -182,6 +182,8 @@ void fillArray(string textWordsArray[], char canonizedText[])
 int getCoincidencesNumber(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber)
 {
 	int coincidences = 0;
+	
+	// TODO: check for the words number in the array
 
 	for (int i = 0; i < (fragmentWordsNumber - 2); i++) {
 
