@@ -16,6 +16,7 @@ void canonize(string text, char canonizedText[]);
 int getWordsNumber(char canonizedText[]);
 void fillArray(string textWordsArray[], char canonizedText[]);
 int getCoincidencesNumber(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber);
+double getPercentage(int coincidences, int fragmentWordsNumber);
 
 int main()
 {
@@ -56,7 +57,7 @@ double antiPlagiarism(string text, string fragment)
 
 	int coincidences = getCoincidencesNumber(textWordsArray, fragmentWordsArray, textWordsNumber, fragmentWordsNumber);
 	
-	return coincidences * 100.0 / (fragmentWordsNumber - 2); //TODO: round to two decimal places
+	return getPercentage(coincidences, fragmentWordsNumber); //TODO: round to two decimal places
 }
 
 bool isSeparator(char c)
@@ -236,4 +237,10 @@ int getCoincidencesNumber(string textWordsArray[], string fragmentWordsArray[], 
 	}
 
 	return coincidences;
+}
+
+double getPercentage(int coincidences, int fragmentWordsNumber)
+{
+	double percentage = round(coincidences * 10000.0 / (fragmentWordsNumber - 2)) / 100;
+	return percentage;
 }
