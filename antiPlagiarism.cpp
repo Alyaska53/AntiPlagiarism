@@ -33,7 +33,7 @@ int main()
 double antiPlagiarism(string text, string fragment)
 {
 	if (text == "" or fragment == "") {
-		return 0.00;
+		return 0.0;
 	}
 	
 	const int TEXT_LENGTH = getLength(text);
