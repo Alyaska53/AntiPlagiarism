@@ -127,10 +127,11 @@ bool isSmallWord(string word)
 
 bool isWrongWord(string word)
 {
-	string wrongWords[] = {"the", "with", "under", "and", "for", "from", "between", "into", "out", "over", "that", "among"};
+	const int N = 12;
+	string wrongWords[N] = {"the", "with", "under", "and", "for", "from", "between", "into", "out", "over", "that", "among"};
 	
-	 for(int i = 0; i < 12; i++) {
-    	if(word == wrongWords[i]) {
+	for (int i = 0; i < N; i++) {
+    	if (word == wrongWords[i]) {
     		return true;
     	}
     }
