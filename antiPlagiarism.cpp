@@ -34,7 +34,9 @@ using namespace std;
 
 double antiPlagiarism(string text, string fragment);
 bool isSeparator(char c);
+bool isNumber(char c);
 int getLength(string text);
+void toLowerCase(char canonizedText[]) ;
 void canonize(string text, char canonizedText[]);
 int getWordsNumber(string canonizedText);
 void fillArray(string textWordsArray[], string canonizedText);
@@ -42,8 +44,8 @@ int getCoincidencesNumber(string textWordsArray[], string fragmentWordsArray[], 
 
 int main()
 {
-	string text = "London is the capital of Great Britain, its political, economic and cultural centre. It's one of the largest cities in the world. Its population is more than million people. London is situated on the river Thames. The city is very old and beautiful. It was founded more than two thousand years ago. Traditionally London is divided into several parts: the City, the West End, the East End and Westminster. The City is the oldest part of London, its financial and business centre. The heart of the City is the Stock Exchange. Westminster is the most important part of the capital. It's the administrative centre. The Houses of Parliament, the seat of the British Government, are there. It's a very beautiful building with two towers and a very big clock called Big Ben. Big Ben is really the bell which strikes every quarter of an hour. Opposite the Houses of Parliament is Westminster Abbey. It's a very beautiful church built over 900 years ago. The tombs of many great statesmen, scientists and writers are there.";
-	string fragment = "Minsk is the capital of Great Britain, its political, economic and cultural centre. It's one of the largest cities in the world. Its population is more than million people. London is situated on the river Thames. The city is very old and beautiful. It was founded more than two thousand years ago. Traditionally London is divided into several parts: the City, the West End, the East End and Westminster. The City is the oldest part of London, its financial and business centre. The heart of the City is the Stock Exchange. Westminster is the most important part of the capital. It's the administrative centre. The Houses of Parliament, the seat of the British Government, are there. It's a very beautiful building with two towers and a very big clock called Big Ben. Hello World!";
+	string text = "        ....London is the capital of Great ............Britain, its political, economic and               cultural centre. It's one of the largest cities in the world. Its population is more than million people. London is situated on the river Thames. The city is very old and beautiful. It was founded more than two thousand years ago. Traditionally London is divided into several parts: the City, the West End, the East End and Westminster. The City is the oldest part of London, its financial and business centre. The heart of the City is the Stock Exchange. Westminster is the most important part of the capital. It's the administrative centre. The Houses of Parliament, the seat of the British Government, are there. It's a very beautiful building with two towers and a very big clock called Big Ben. Big Ben is really the bell which strikes every quarter of an hour. Opposite the Houses of Parliament is Westminster Abbey. It's a very beautiful church built over 900 years ago. The tombs of many great statesmen, scientists and writers are there.";
+	string fragment = "Minsk is the capital of Belarus, its political, economic and cultural centre. It's one of the largest cities in the world. Its population is more than million people. London is situated on the river Thames. The city is very old and beautiful. It was founded more than two thousand years ago. Traditionally London is divided into several parts: the City, the West End, the East End and Westminster. The City is the oldest part of London, its financial and business centre. The heart of the City is the Stock Exchange. Westminster is the most important part of the capital. It's the administrative centre. The Houses of Parliament, the seat of the British Government, are there. It's a very beautiful building with two towers and a very big clock called Big Ben. Hello World!";
 
 	cout << "Result: " << antiPlagiarism(text, fragment);
 
@@ -77,7 +79,7 @@ double antiPlagiarism(string text, string fragment)
 
 bool isSeparator(char c)
 {
-	char separator[] = " ~`!@#$%^&*()-_=+,./{[]}}?\n";
+	char separator[] = " ~`!@#$%^&*-_=+,./({[<>]})?\n";
 
 	for (int i = 0; separator[i] != '\0'; i++) {
 		if (c == separator[i]) {
@@ -86,6 +88,28 @@ bool isSeparator(char c)
 	}
 
 	return false;
+}
+
+bool isNumber(char c)
+{
+	char number[] = "0123456789";
+	
+    for(int i = 0; number[i] != '\0'; i++) {
+    	if(c == number[i]) {
+    		return true;
+    	}
+    }
+    
+	return false;
+}
+
+void toLowerCase(char canonizedText[]) 
+{
+	for(int i = 0; canonizedText[i] != '\0'; i++) {
+		if((canonizedText[i] >= 65) and (canonizedText[i] <= 90)) {
+			canonizedText[i] = canonizedText[i] + 32;
+		}
+	}
 }
 
 int getLength(string text)
@@ -104,11 +128,11 @@ void canonize(string text, char canonizedText[])
 	int index = 0;
 	
 	for (int i = 0; text[i] != '\0'; i++) {
-		if (!isSeparator(text[i])) {
-			canonizedText[index] = text[i];
-			index++;
-
-			if (isSeparator(text[i + 1]) or text[i + 1] == '\0') {
+		if (!isSeparator(text[i]) and !isNumber(text[i])) {
+				canonizedText[index] = text[i];
+			    index++;
+			
+			if (isSeparator(text[i + 1]) or isNumber(text[i + 1]) or text[i + 1] == '\0') {
 				canonizedText[index] = ' ';
 				index++;
 			}
@@ -116,6 +140,8 @@ void canonize(string text, char canonizedText[])
 	}
 	
 	canonizedText[index] = '\0';
+	
+	toLowerCase(canonizedText);
 }
 
 int getWordsNumber(string canonizedText)
