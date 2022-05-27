@@ -130,12 +130,14 @@ void canonize(string text, char canonizedText[])
 	for (int i = 0; text[i] != '\0'; i++) {
 		if (!isSeparator(text[i]) and !isNumber(text[i])) {
 			canonizedText[index] = text[i];
+			index++;
 		    
 			if (isSeparator(text[i + 1]) or isNumber(text[i + 1]) or text[i + 1] == '\0') {
 				canonizedText[index] = ' ';
 			}
 			
-			index++;
+				index++;
+			}
 		}
 	}
 	
