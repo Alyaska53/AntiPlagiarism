@@ -94,7 +94,7 @@ bool isNumber(char c)
 {
 	char number[] = "0123456789";
 	
-    for(int i = 0; number[i] != '\0'; i++) {
+    for (int i = 0; number[i] != '\0'; i++) {
     	if(c == number[i]) {
     		return true;
     	}
@@ -105,8 +105,8 @@ bool isNumber(char c)
 
 void toLowerCase(char canonizedText[]) 
 {
-	for(int i = 0; canonizedText[i] != '\0'; i++) {
-		if((canonizedText[i] >= 65) and (canonizedText[i] <= 90)) {
+	for (int i = 0; canonizedText[i] != '\0'; i++) {
+		if ((canonizedText[i] >= 65) and (canonizedText[i] <= 90)) {
 			canonizedText[i] = canonizedText[i] + 32;
 		}
 	}
@@ -129,13 +129,13 @@ void canonize(string text, char canonizedText[])
 	
 	for (int i = 0; text[i] != '\0'; i++) {
 		if (!isSeparator(text[i]) and !isNumber(text[i])) {
-				canonizedText[index] = text[i];
-			    index++;
-			
+			canonizedText[index] = text[i];
+		    
 			if (isSeparator(text[i + 1]) or isNumber(text[i + 1]) or text[i + 1] == '\0') {
 				canonizedText[index] = ' ';
-				index++;
 			}
+			
+			index++;
 		}
 	}
 	
