@@ -182,9 +182,7 @@ void cutWrongWords(char canonizedText[])
 void canonize(string text, char canonizedText[])
 {
 	cutSeparators(text, canonizedText);
-	
 	toLowerCase(canonizedText);
-	
 	cutWrongWords(canonizedText);
 }
 
