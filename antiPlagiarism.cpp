@@ -95,7 +95,7 @@ bool isNumber(char c)
 	char number[] = "0123456789";
 	
     for (int i = 0; number[i] != '\0'; i++) {
-    	if(c == number[i]) {
+    	if (c == number[i]) {
     		return true;
     	}
     }
