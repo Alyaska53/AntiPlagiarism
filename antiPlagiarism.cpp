@@ -241,8 +241,21 @@ int getCoincidencesNumber(string textWordsArray[], string fragmentWordsArray[], 
 	return coincidences;
 }
 
-double getPercentage(int coincidences, int fragmentWordsNumber)
+int getWordsMatch(int shingleLength, int i, int j, string textWordsArray[], string fragmentWordsArray[])
 {
-	double percentage = round(coincidences * 10000.0 / (fragmentWordsNumber - 2)) / 100;
+	int wordsMatch = 0;
+			
+	for (int k = 0; k < shingleLength; k++) {
+		if (fragmentWordsArray[i + k] == textWordsArray[j + k]) {
+			wordsMatch++;
+		}
+	}
+	
+	return wordsMatch;
+}
+
+double getPercentage(int shinglesMatch, int fragmentShinglesNumber)
+{
+	double percentage = round(shinglesMatch * 10000.0 / fragmentShinglesNumber) / 100;
 	return percentage;
 }
