@@ -64,7 +64,7 @@ double antiPlagiarism(string text, string fragment)
 
 bool isSeparator(char c)
 {
-	char separator[] = " ~`!@#$%^&*-_=+,./({[<>]})?\n";
+	char separator[] = " ~`!@#$%^&*-_=+,./({[<>]});:?\n";
 
 	for (int i = 0; separator[i] != '\0'; i++) {
 		if (c == separator[i]) {
