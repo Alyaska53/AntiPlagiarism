@@ -16,7 +16,8 @@ void toLowerCase(char canonizedText[]) ;
 void canonize(string text, char canonizedText[]);
 int getWordsNumber(char canonizedText[]);
 void fillArray(string textWordsArray[], char canonizedText[]);
-int getCoincidencesNumber(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber);
+double getMatchesPercentage(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber);
+int getWordsMatch(int shingleLength, int i, int j, string textWordsArray[], string fragmentWordsArray[]);
 double getPercentage(int coincidences, int fragmentWordsNumber);
 
 int main()
@@ -56,10 +57,8 @@ double antiPlagiarism(string text, string fragment)
 	
 	fillArray(textWordsArray, canonizedText);
 	fillArray(fragmentWordsArray, canonizedFragment);
-
-	int coincidences = getCoincidencesNumber(textWordsArray, fragmentWordsArray, textWordsNumber, fragmentWordsNumber);
 	
-	return getPercentage(coincidences, fragmentWordsNumber); //TODO: round to two decimal places
+	return getMatchesPercentage(textWordsArray, fragmentWordsArray, textWordsNumber, fragmentWordsNumber);
 }
 
 bool isSeparator(char c)
@@ -218,27 +217,32 @@ void fillArray(string textWordsArray[], char canonizedText[])
 	}
 }
 
-int getCoincidencesNumber(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber)
+double getMatchesPercentage(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber)
 {
-	int coincidences = 0;
+	int shinglesMatch = 0;
+	int shingleLength = 3;
 	
-	// TODO: check for the words number in the array
+	if (textWordsNumber < 4 or fragmentWordsNumber < 4) {
+		shingleLength = 1;
+	}
+	
+	cout << shingleLength << endl;
+	
+	int textShinglesNumber = textWordsNumber - shingleLength + 1;
+	int fragmentShinglesNumber = fragmentWordsNumber - shingleLength + 1;
 
-	for (int i = 0; i < (fragmentWordsNumber - 2); i++) {
-
-		for (int j = 0; j < (textWordsNumber - 2); j++) {
-			if ((fragmentWordsArray[i] == textWordsArray[j]) and
-				(fragmentWordsArray[i + 1] == textWordsArray[j + 1]) and
-				(fragmentWordsArray[i + 2] == textWordsArray[j + 2])) {
-					
-				coincidences++;
-				
+	for (int i = 0; i < fragmentShinglesNumber; i++) {
+		for (int j = 0; j < textShinglesNumber; j++) {
+			int wordsMatch = getWordsMatch(shingleLength, i, j, textWordsArray, fragmentWordsArray);
+			
+			if (wordsMatch == shingleLength) {
+				shinglesMatch++;
 				break;
-			}
+			}		
 		}
 	}
-
-	return coincidences;
+	
+	return getPercentage(shinglesMatch, fragmentShinglesNumber);		
 }
 
 int getWordsMatch(int shingleLength, int i, int j, string textWordsArray[], string fragmentWordsArray[])
