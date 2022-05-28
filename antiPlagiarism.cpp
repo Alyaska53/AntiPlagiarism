@@ -226,8 +226,6 @@ double getMatchesPercentage(string textWordsArray[], string fragmentWordsArray[]
 		shingleLength = 1;
 	}
 	
-	cout << shingleLength << endl;
-	
 	int textShinglesNumber = textWordsNumber - shingleLength + 1;
 	int fragmentShinglesNumber = fragmentWordsNumber - shingleLength + 1;
 
