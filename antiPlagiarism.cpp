@@ -34,12 +34,12 @@ int main()
 
 double antiPlagiarism(string text, string fragment)
 {
-	if (text == "" or fragment == "") {
-		return 0.0;
-	}
-	
 	const int TEXT_LENGTH = getLength(text);
 	const int FRAGMENT_LENGTH = getLength(fragment);
+	
+	if (TEXT_LENGTH == 0 or FRAGMENT_LENGTH == 0) {
+		return 0.0;
+	}
 	
 	char canonizedText[TEXT_LENGTH];
 	char canonizedFragment[FRAGMENT_LENGTH];
@@ -49,6 +49,10 @@ double antiPlagiarism(string text, string fragment)
 
 	int textWordsNumber = getWordsNumber(canonizedText);
 	int fragmentWordsNumber = getWordsNumber(canonizedFragment);
+	
+	if (textWordsNumber == 0 or fragmentWordsNumber == 0) {
+		return 0.0;
+	}
 	
 	string textWordsArray[textWordsNumber];
 	string fragmentWordsArray[fragmentWordsNumber];
