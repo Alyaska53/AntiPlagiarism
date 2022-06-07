@@ -1,1 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;700;800&display=swap');
+
+:root {
+  --light-color: #ffffff;
+  --dark-green-color: #034e04;
+  --green-hover: ##54c755;
+  --green-active: ##398c3a;
+  --gray-color: #5c5c5c;
+}
+
+* {
+  font-family: 'Exo 2', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(270deg, #00A757 0%, #A0DEFA 100%);
+}
+
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.header__title, .header__subtitle {
+  color: var(--light-color);
+  text-align: center;
+  text-shadow: -1px 1px 0 var(--dark-green-color),
+                1px 1px 0 var(--dark-green-color),
+                1px -1px 0 var(--dark-green-color),
+                -1px -1px 0 var(--dark-green-color);
+}
+
+.header__title {
+  font-weight: 800;
+  font-size: 90px;
+  margin-top: 30px;
+}
+
+.header__subtitle {
+  font-weight: 700;
+  font-size: 50px;
+  margin-top: 22px;
+}
