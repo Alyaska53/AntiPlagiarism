@@ -6,6 +6,9 @@
   --green-hover: ##54c755;
   --green-active: ##398c3a;
   --gray-color: #5c5c5c;
+  --result-bg: #071726;
+  --bg-textarea: #f4f4f4;
+  --placeholder-color: #b1afaf;
 }
 
 * {
