@@ -1,4 +1,4 @@
-# AntiPlagiarism
+# textAI
 
 ### This project is being developed within **DevIncubator**
 
