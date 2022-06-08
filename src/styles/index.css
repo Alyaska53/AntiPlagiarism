@@ -124,6 +124,22 @@ textarea::placeholder {
   color: var(--placeholder-color);
 }
 
+textarea::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: var(--placeholder-color);
+  border: 2px solid #f1f1f1;
+}
+
+textarea::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
 .main__text-container--textarea {
   padding: 14px 32px;
 }
