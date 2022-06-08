@@ -95,7 +95,7 @@ body {
   gap: 25px;
 }
 
-.main__text-container--block__image {
+.main__text-container--block__result {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -105,7 +105,7 @@ body {
   border-radius: 10px;
 }
 
-.main__text-container--block__image img {
+.main__text-container--block__result img {
   width: 105px;
 }
 
