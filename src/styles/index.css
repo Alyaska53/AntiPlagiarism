@@ -157,3 +157,49 @@ textarea::-webkit-scrollbar-track {
 .main__fragment-container__textarea {
   padding: 8px 32px;
 }
+
+.footer {
+  width: 100%;
+  min-height: 84px;
+  background: var(--light-color);
+  padding: 0 35px;
+  border: 2px solid var(--dark-green-color);
+  border-radius: 10px;
+  margin-top: 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer__dev-inc-link svg path,
+.footer__links--link svg path {
+  fill: var(--dark-green-color);
+}
+
+.footer__dev-inc-link:hover svg path,
+.footer__links--link:hover svg path {
+  fill: var(--green-hover);
+}
+
+.footer__dev-inc-link:active svg path,
+.footer__links--link:active svg path {
+  fill: var(--green-active);
+}
+
+.footer__authors {
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--gray-color);
+}
+
+.footer__links {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.footer__links--link {
+  width: 40px;
+  height: 40px;
+}
