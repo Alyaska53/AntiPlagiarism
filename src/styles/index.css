@@ -112,6 +112,7 @@ body {
 .main__text-container--textarea,
 .main__fragment-container__textarea {
   flex-grow: 1;
+  background-color: var(--bg-textarea);
   border: none;
   border-radius: 10px;
   outline: none;
@@ -125,15 +126,15 @@ textarea::placeholder {
 }
 
 textarea::-webkit-scrollbar {
-  width: 12px;
-  background-color: #f1f1f1;
+  width: 16px;
+  background-color: var(--bg-textarea);
   border-radius: 10px;
 }
 
 textarea::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background-color: var(--placeholder-color);
-  border: 2px solid #f1f1f1;
+  background-color: var(--dark-green-color);
+  border: 5px solid var(--bg-textarea);
 }
 
 textarea::-webkit-scrollbar-track {
