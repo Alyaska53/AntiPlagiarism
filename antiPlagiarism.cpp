@@ -20,9 +20,13 @@ double getMatchesPercentage(string textWordsArray[], string fragmentWordsArray[]
 int getWordsMatch(int shingleLength, int i, int j, string textWordsArray[], string fragmentWordsArray[]);
 double getPercentage(int coincidences, int fragmentWordsNumber);
 
+const int CHARACTER_A_ASCII = 65;
+const int CHARACTER_Z_ASCII = 90;
+const int LOWERCASE_UPPERCASE_INTERVAL = 32;
+
 int main()
 {
-	string text = "            ....London capital  Great ............ The Britain, the the the its political, economic                cultural centre. It's  largest cities in the world. Its population is more than million people. London is situated on the river Thames. The city is very old and beautiful. It was founded more than two thousand years ago. Traditionally London is divided into several parts:  City, the West End, the East End and Westminster. The City is the oldest part of London, its financial and business centre. The heart  City  Stock Exchange. Westminster is the most important part  capital. It's administrative centre. The Houses of Parliament, the seat of the British Government, are there. It's a very beautiful building with two towers and a very big clock called Big Ben. Big Ben is really the bell which strikes every quarter of an hour. Opposite the Houses of Parliament is Westminster Abbey. It's a very beautiful church built over 900 years ago. The tombs of many great statesmen, scientists and writers are there.       ";
+	string text = "            ....London capital            Great ............ The Britain, the the the its political, economic                cultural centre. It's  largest cities in the world. Its population is more than million people. London is situated on the river Thames. The city is very old and beautiful. It was founded more than two thousand years ago. Traditionally London is divided into several parts:  City, the West End, the East End and Westminster. The City is the oldest part of London, its financial and business centre. The heart  City  Stock Exchange. Westminster is the most important part  capital. It's administrative centre. The Houses of Parliament, the seat of the British Government, are there. It's a very beautiful building with two towers and a very big clock called Big Ben. Big Ben is really the bell which strikes every quarter of an hour. Opposite the Houses of Parliament is Westminster Abbey. It's a very beautiful church built over 900 years ago. The tombs of many great statesmen, scientists and writers are there.       ";
 	string fragment = "         Minsk  capital  Belarus, its political, economic and cultural centre. It's one  largest cities in the world. Its population is more than million people. London is situated on the river Thames. The city is very old and beautiful. It was founded more than two thousand years ago. Traditionally London is divided into several parts: the City, the West End,  East End and Westminster.  City   oldest part of London, its financial and business centre. The heart of the City is the Stock Exchange. Westminster is the most important part of the capital. It's the administrative centre. Houses of Parliament, the seat of the British Government, are there. It's a very beautiful building with two towers and a very big clock called Big Ben. Hello World!           ";
  	
 	cout << "Plagiarism percentage: " << antiPlagiarism(text, fragment) << "%";
@@ -117,8 +121,8 @@ bool isWrongWord(string word)
 void toLowerCase(char canonizedText[]) 
 {
 	for (int i = 0; canonizedText[i] != '\0'; i++) {
-		if ((canonizedText[i] >= 65) and (canonizedText[i] <= 90)) {
-			canonizedText[i] = canonizedText[i] + 32;
+		if ((canonizedText[i] >= CHARACTER_A_ASCII) and (canonizedText[i] <= CHARACTER_Z_ASCII)) {
+			canonizedText[i] = canonizedText[i] + LOWERCASE_UPPERCASE_INTERVAL;
 		}
 	}
 }
