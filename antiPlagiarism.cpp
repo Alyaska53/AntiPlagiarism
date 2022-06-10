@@ -17,6 +17,7 @@ void canonize(string text, char canonizedText[]);
 int getWordsNumber(char canonizedText[]);
 void fillArray(string textWordsArray[], char canonizedText[]);
 long RSHash(string str);
+void fillHashsArray(string textWordsArray[], long textWordsHashsArray[], int textWordsNumber);
 double getMatchesPercentage(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber);
 int getWordsMatch(int shingleLength, int i, int j, string textWordsArray[], string fragmentWordsArray[]);
 double getPercentage(int coincidences, int fragmentWordsNumber);
@@ -65,6 +66,12 @@ double antiPlagiarism(string text, string fragment)
 	
 	fillArray(textWordsArray, canonizedText);
 	fillArray(fragmentWordsArray, canonizedFragment);
+	
+	long textWordsHashsArray[textWordsNumber];
+	long fragmentWordsHashsArray[fragmentWordsNumber];
+	
+	fillHashsArray(textWordsArray, textWordsHashsArray, textWordsNumber);
+	fillHashsArray(fragmentWordsArray, fragmentWordsHashsArray, fragmentWordsNumber);
 	
 	return getMatchesPercentage(textWordsArray, fragmentWordsArray, textWordsNumber, fragmentWordsNumber);
 }
@@ -240,6 +247,13 @@ long RSHash(string str)
     }
     
     return hash;
+}
+
+void fillHashsArray(string textWordsArray[], long textWordsHashsArray[], int textWordsNumber)
+{
+	for (int i = 0; i < textWordsNumber; i++) {
+		textWordsHashsArray[i] = RSHash(textWordsArray[i]);
+	}
 }
 
 double getMatchesPercentage(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber)
