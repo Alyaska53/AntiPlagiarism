@@ -23,6 +23,7 @@ double getPercentage(int coincidences, int fragmentWordsNumber);
 const int CHARACTER_A_ASCII = 65;
 const int CHARACTER_Z_ASCII = 90;
 const int LOWERCASE_UPPERCASE_INTERVAL = 32;
+const char TERMINAL_NULL = '\0';
 
 int main()
 {
@@ -69,7 +70,7 @@ bool isSeparator(char c)
 {
 	char separator[] = " ~`!@#$%^&*-_=+,./({[<>]});:?\n";
 
-	for (int i = 0; separator[i] != '\0'; i++) {
+	for (int i = 0; separator[i] != TERMINAL_NULL'; i++) {
 		if (c == separator[i]) {
 			return true;
 		}
@@ -82,7 +83,7 @@ bool isNumber(char c)
 {
 	char number[] = "0123456789";
 	
-	for (int i = 0; number[i] != '\0'; i++) {
+	for (int i = 0; number[i] != TERMINAL_NULL; i++) {
 		if (c == number[i]) {
 			return true;
 		}
@@ -120,7 +121,7 @@ bool isWrongWord(string word)
 
 void toLowerCase(char canonizedText[]) 
 {
-	for (int i = 0; canonizedText[i] != '\0'; i++) {
+	for (int i = 0; canonizedText[i] != TERMINAL_NULL; i++) {
 		if ((canonizedText[i] >= CHARACTER_A_ASCII) and (canonizedText[i] <= CHARACTER_Z_ASCII)) {
 			canonizedText[i] = canonizedText[i] + LOWERCASE_UPPERCASE_INTERVAL;
 		}
@@ -131,7 +132,7 @@ int getLength(string text)
 {
 	int counter = 0;
 
-	for (int i = 0; text[i] != '\0'; i++) {
+	for (int i = 0; text[i] != TERMINAL_NULL; i++) {
 		counter++;
 	}
 
@@ -142,19 +143,19 @@ void cutSeparators(string text, char canonizedText[])
 {
 	int index = 0;
 	
-	for (int i = 0; text[i] != '\0'; i++) {
+	for (int i = 0; text[i] != TERMINAL_NULL; i++) {
 		if (!isSeparator(text[i]) and !isNumber(text[i])) {
 				canonizedText[index] = text[i];
 				index++;
 			
-			if (isSeparator(text[i + 1]) or isNumber(text[i + 1]) or text[i + 1] == '\0') {
+			if (isSeparator(text[i + 1]) or isNumber(text[i + 1]) or text[i + 1] == TERMINAL_NULL) {
 				canonizedText[index] = ' ';
 				index++;
 			}
 		}
 	}
 	
-	canonizedText[index] = '\0';
+	canonizedText[index] = TERMINAL_NULL;
 }
 
 void cutWrongWords(char canonizedText[])
@@ -166,7 +167,7 @@ void cutWrongWords(char canonizedText[])
 		if (canonizedText[i] != ' ') {
 			word += canonizedText[i];
 			
-			if (canonizedText[i + 1] == ' ' or canonizedText[i + 1] == '\0') {
+			if (canonizedText[i + 1] == ' ' or canonizedText[i + 1] == TERMINAL_NULL) {
 				if (!isSmallWord(word) and !isWrongWord(word)) {
 					int wordLength = getLength(word);
 				
@@ -184,7 +185,7 @@ void cutWrongWords(char canonizedText[])
 		}
 	}
 	
-	canonizedText[index] = '\0';
+	canonizedText[index] = TERMINAL_NULL;
 }
 
 void canonize(string text, char canonizedText[])
@@ -198,8 +199,8 @@ int getWordsNumber(char canonizedText[])
 {
 	int wordsCounter = 0;
 
-	for (int i = 0; canonizedText[i] != '\0'; i++) {
-		if (canonizedText[i] == ' ' or canonizedText[i + 1] == '\0') {
+	for (int i = 0; canonizedText[i] != TERMINAL_NULL; i++) {
+		if (canonizedText[i] == ' ' or canonizedText[i + 1] == TERMINAL_NULL) {
 			wordsCounter++;
 		}
 	}
@@ -212,7 +213,7 @@ void fillArray(string textWordsArray[], char canonizedText[])
 	string word = "";
 	int index = 0;
 	
-	for (int i = 0; canonizedText[i] != '\0'; i++) {
+	for (int i = 0; canonizedText[i] != TERMINAL_NULL; i++) {
 		if (canonizedText[i] != ' ') {
 			word += canonizedText[i];
 		} else {
