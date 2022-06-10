@@ -91,7 +91,9 @@ bool isSmallWord(string word)
 {
 	int wordLength = getLength(word);
 	
-	if (wordLength < 3) {
+	const int MIN_WORD_LENGTH = 3;
+	
+	if (wordLength < MIN_WORD_LENGTH) {
 		return true;
 	}
 	
