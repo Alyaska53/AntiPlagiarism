@@ -24,6 +24,8 @@ const int CHARACTER_A_ASCII = 65;
 const int CHARACTER_Z_ASCII = 90;
 const int LOWERCASE_UPPERCASE_INTERVAL = 32;
 const char TERMINAL_NULL = '\0';
+const char SPACE = ' ';
+const string EMPTY_STRING = "";
 
 int main()
 {
@@ -70,7 +72,7 @@ bool isSeparator(char c)
 {
 	char separator[] = " ~`!@#$%^&*-_=+,./({[<>]});:?\n";
 
-	for (int i = 0; separator[i] != TERMINAL_NULL'; i++) {
+	for (int i = 0; separator[i] != TERMINAL_NULL; i++) {
 		if (c == separator[i]) {
 			return true;
 		}
@@ -149,7 +151,7 @@ void cutSeparators(string text, char canonizedText[])
 				index++;
 			
 			if (isSeparator(text[i + 1]) or isNumber(text[i + 1]) or text[i + 1] == TERMINAL_NULL) {
-				canonizedText[index] = ' ';
+				canonizedText[index] = SPACE;
 				index++;
 			}
 		}
@@ -161,13 +163,13 @@ void cutSeparators(string text, char canonizedText[])
 void cutWrongWords(char canonizedText[])
 {
 	int index = 0;
-	string word = "";
+	string word = EMPTY_STRING;
 	
-	for (int i = 0; canonizedText[i] != '\0'; i++) {
-		if (canonizedText[i] != ' ') {
+	for (int i = 0; canonizedText[i] != TERMINAL_NULL; i++) {
+		if (canonizedText[i] != SPACE) {
 			word += canonizedText[i];
 			
-			if (canonizedText[i + 1] == ' ' or canonizedText[i + 1] == TERMINAL_NULL) {
+			if (canonizedText[i + 1] == SPACE or canonizedText[i + 1] == TERMINAL_NULL) {
 				if (!isSmallWord(word) and !isWrongWord(word)) {
 					int wordLength = getLength(word);
 				
@@ -176,11 +178,11 @@ void cutWrongWords(char canonizedText[])
 						index++;
 					}
 					
-					canonizedText[index] = ' ';
+					canonizedText[index] = SPACE;
 					index++;
 				}
 				
-				word = "";
+				word = EMPTY_STRING;
 			}
 		}
 	}
@@ -200,7 +202,7 @@ int getWordsNumber(char canonizedText[])
 	int wordsCounter = 0;
 
 	for (int i = 0; canonizedText[i] != TERMINAL_NULL; i++) {
-		if (canonizedText[i] == ' ' or canonizedText[i + 1] == TERMINAL_NULL) {
+		if (canonizedText[i] == SPACE or canonizedText[i + 1] == TERMINAL_NULL) {
 			wordsCounter++;
 		}
 	}
@@ -210,16 +212,16 @@ int getWordsNumber(char canonizedText[])
 
 void fillArray(string textWordsArray[], char canonizedText[])
 {
-	string word = "";
+	string word = EMPTY_STRING;
 	int index = 0;
 	
 	for (int i = 0; canonizedText[i] != TERMINAL_NULL; i++) {
-		if (canonizedText[i] != ' ') {
+		if (canonizedText[i] != SPACE) {
 			word += canonizedText[i];
 		} else {
 			textWordsArray[index] = word;
 			index++;
-			word = "";
+			word = EMPTY_STRING;
 		}
 	}
 }
