@@ -120,8 +120,29 @@ body {
   border-radius: 10px;
 }
 
-.main__text-container--block__result img {
-  width: 105px;
+.full-opacity {
+  opacity: 1;
+}
+
+.partial-opacity {
+  opacity: 0.2;
+}
+
+#result-image {
+  position: absolute;
+  width: 104px;
+  height: 86px;
+  background-image: url(../images/main.png);
+  background-size: cover;
+}
+
+#result-text {
+  position: absolute;
+  width: 130px;
+  font-size: 1.4rem;
+  text-align: center;
+  color: var(--light-color);
+  opacity: 0;
 }
 
 .main__text-container--textarea,
