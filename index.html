@@ -21,18 +21,19 @@
         <main class="main">
             <section class="main__text-container">
                 <div class="main__text-container--block">
-                    <button class="main__text-container--block__button">Original</button>
+                    <button id="open" class="main__text-container--block__button">Original</button>
                     <div class="main__text-container--block__result">
-                        <img src="./src/images/main.png" alt="brain">
+                        <div id="result-image"></div>
+                        <p id="result-text">Your text is 100% unique</p>
                     </div>
                 </div>
 
-                <textarea class="main__text-container--textarea" placeholder="Original text"></textarea>
+                <textarea disabled id="info" class="main__text-container--textarea" placeholder="Original text"></textarea>
             </section>
 
             <form class="main__fragment-container">
-                <button class="main__fragment-container__button">Check</button>
-                <textarea class="main__fragment-container__textarea" placeholder="Input text... textarea 2 rows"></textarea>
+                <button id="send" class="main__fragment-container__button" type="button" disabled>Check</button>
+                <textarea id="value" class="main__fragment-container__textarea" placeholder="Input text... textarea 2 rows"></textarea>
             </form>
         </main>
 
