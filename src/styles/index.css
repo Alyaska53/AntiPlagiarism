@@ -111,10 +111,11 @@ body {
 }
 
 .main__text-container--block__result {
+  position: relative;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   flex-grow: 1;
   background-color: var(--result-bg);
   border-radius: 10px;
