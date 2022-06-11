@@ -19,6 +19,7 @@ void fillArray(string textWordsArray[], char canonizedText[]);
 long RSHash(string str);
 long RSHash(int array[], int shingleLength);
 void fillHashsArray(string textWordsArray[], long textWordsHashsArray[], int textWordsNumber);
+bool binarySearch(long requiredHash, long sortedHashsArray[], int arrayLength);
 double getMatchesPercentage(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber);
 int getWordsMatch(int shingleLength, int i, int j, string textWordsArray[], string fragmentWordsArray[]);
 double getPercentage(int coincidences, int fragmentWordsNumber);
@@ -271,6 +272,32 @@ void fillHashsArray(string textWordsArray[], long textWordsHashsArray[], int tex
 	for (int i = 0; i < textWordsNumber; i++) {
 		textWordsHashsArray[i] = RSHash(textWordsArray[i]);
 	}
+}
+
+bool binarySearch(long requiredHash, long sortedHashsArray[], int arrayLength)
+{
+	bool flag = false;
+	int leftBorder = 0;
+	int rightBorder = arrayLength - 1;
+	
+	while(leftBorder <= rightBorder) {
+		int mid = (leftBorder + rightBorder) / 2;
+		
+		if(sortedHashsArray[mid] < requiredHash) {
+			leftBorder = mid + 1;
+		}
+		
+		else if(sortedHashsArray[mid] > requiredHash) {
+			rightBorder = mid - 1;
+		}
+		
+		else if (sortedHashsArray[mid] == requiredHash) {
+			flag = true;
+			break;
+		}
+	}
+	
+	return flag;
 }
 
 double getMatchesPercentage(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber)
