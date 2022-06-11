@@ -192,6 +192,13 @@ textarea::-webkit-scrollbar-track {
   width: 250px;
 }
 
+.main__fragment-container__button:disabled {
+  color: #d2d5db;
+  background: #6c7589;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
 .main__fragment-container__textarea {
   padding: 8px 32px;
 }
