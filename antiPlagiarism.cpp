@@ -17,10 +17,12 @@ void canonize(string text, char canonizedText[]);
 int getWordsNumber(char canonizedText[]);
 void fillArray(string textWordsArray[], char canonizedText[]);
 long RSHash(string str);
+long RSHash(int array[], int shingleLength);
 void fillHashsArray(string textWordsArray[], long textWordsHashsArray[], int textWordsNumber);
 double getMatchesPercentage(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber);
 int getWordsMatch(int shingleLength, int i, int j, string textWordsArray[], string fragmentWordsArray[]);
 double getPercentage(int coincidences, int fragmentWordsNumber);
+
 
 const int CHARACTER_A_ASCII = 65;
 const int CHARACTER_Z_ASCII = 90;
@@ -240,9 +242,24 @@ long RSHash(string str)
     int a = 63689;
     long hash = 0;
     
-    for(int i = 0; i < str.length(); i++)
+    for(int i = 0; i < getLength(str); i++)
     {
         hash = hash * a + (int)str[i];
+        a    = a * b;
+    }
+    
+    return hash;
+}
+
+long RSHash(int array[], int shingleLength)
+{
+	int b = 378551;
+    int a = 63689;
+    long hash = 0;
+    
+    for(int i = 0; i < shingleLength; i++)
+    {
+        hash = hash * a + array[i];
         a    = a * b;
     }
     
