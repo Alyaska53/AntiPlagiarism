@@ -163,7 +163,7 @@ void cutSeparators(string text, char canonizedText[])
 				canonizedText[index] = text[i];
 				index++;
 			
-			if (isSeparator(text[i + 1]) or isNumber(text[i + 1]) or text[i + 1] == TERMINAL_NULL) {
+			if (isSeparator(text[i + 1]) or isNumber(text[i + 1])) {
 				canonizedText[index] = SPACE;
 				index++;
 			}
