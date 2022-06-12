@@ -5,23 +5,25 @@
 using namespace std;
 
 double antiPlagiarism(string text, string fragment);
+int getLength(string text);
 bool isSeparator(char c);
 bool isNumber(char c);
 bool isSmallWord(string word);
 bool isWrongWord(string word);
 void cutSeparators(string text, char canonizedText[]);
 void cutWrongWords(char canonizedText[]);
-int getLength(string text);
 void toLowerCase(char canonizedText[]) ;
 void canonize(string text, char canonizedText[]);
 int getWordsNumber(char canonizedText[]);
 void fillArray(string textWordsArray[], char canonizedText[]);
 long RSHash(string str);
-long RSHash(int array[], int shingleLength);
+long getShingleHash(long textWordsHashsArray[], int shingleLength, int startIndex);
+void getShinglesHashsArray(long textWordsHashsArray[], int textShinglesNumber, int shingleLength, long shinglesHashsArray[]); 
 void fillHashsArray(string textWordsArray[], long textWordsHashsArray[], int textWordsNumber);
+void mergeSort(long unsortedArray[], int arrayLength);
+void merge(long unsortedArray[], long leftArray[], int leftArrayLength, long rightArray[], int rightArrayLength);
 bool binarySearch(long requiredHash, long sortedHashsArray[], int arrayLength);
-double getMatchesPercentage(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber);
-int getWordsMatch(int shingleLength, int i, int j, string textWordsArray[], string fragmentWordsArray[]);
+double getMatchesPercentage(long textWordsHashsArray[], long fragmentWordsHashsArray[], int textWordsNumber, int fragmentWordsNumber);
 double getPercentage(int coincidences, int fragmentWordsNumber);
 
 
@@ -76,7 +78,18 @@ double antiPlagiarism(string text, string fragment)
 	fillHashsArray(textWordsArray, textWordsHashsArray, textWordsNumber);
 	fillHashsArray(fragmentWordsArray, fragmentWordsHashsArray, fragmentWordsNumber);
 	
-	return getMatchesPercentage(textWordsArray, fragmentWordsArray, textWordsNumber, fragmentWordsNumber);
+	return getMatchesPercentage(textWordsHashsArray, fragmentWordsHashsArray, textWordsNumber, fragmentWordsNumber);
+}
+
+int getLength(string text)
+{
+	int counter = 0;
+
+	for (int i = 0; text[i] != TERMINAL_NULL; i++) {
+		counter++;
+	}
+
+	return counter;
 }
 
 bool isSeparator(char c)
@@ -139,17 +152,6 @@ void toLowerCase(char canonizedText[])
 			canonizedText[i] = canonizedText[i] + LOWERCASE_UPPERCASE_INTERVAL;
 		}
 	}
-}
-
-int getLength(string text)
-{
-	int counter = 0;
-
-	for (int i = 0; text[i] != TERMINAL_NULL; i++) {
-		counter++;
-	}
-
-	return counter;
 }
 
 void cutSeparators(string text, char canonizedText[])
@@ -252,7 +254,14 @@ long RSHash(string str)
     return hash;
 }
 
-long RSHash(int array[], int shingleLength)
+void fillHashsArray(string textWordsArray[], long textWordsHashsArray[], int textWordsNumber)
+{
+	for (int i = 0; i < textWordsNumber; i++) {
+		textWordsHashsArray[i] = RSHash(textWordsArray[i]);
+	}
+}
+
+long getShingleHash(long textWordsHashsArray[], int shingleLength, int startIndex)
 {
 	int b = 378551;
     int a = 63689;
@@ -260,17 +269,70 @@ long RSHash(int array[], int shingleLength)
     
     for(int i = 0; i < shingleLength; i++)
     {
-        hash = hash * a + array[i];
-        a    = a * b;
+        hash = hash * a + textWordsHashsArray[startIndex + i];
+        a = a * b;
     }
     
     return hash;
 }
 
-void fillHashsArray(string textWordsArray[], long textWordsHashsArray[], int textWordsNumber)
+void getShinglesHashsArray(long textWordsHashsArray[], int textShinglesNumber, int shingleLength, long shinglesHashsArray[]) 
 {
-	for (int i = 0; i < textWordsNumber; i++) {
-		textWordsHashsArray[i] = RSHash(textWordsArray[i]);
+	for(int i = 0; i < textShinglesNumber; i++) {
+		shinglesHashsArray[i] = getShingleHash(textWordsHashsArray, shingleLength, i);
+	}
+}
+
+void mergeSort(long unsortedArray[], int arrayLength)
+{
+	if(arrayLength == 1) {
+		return;
+	}
+	
+	int mid = arrayLength/2;
+	int leftArrayLength = mid;
+	int rightArrayLength = arrayLength - mid;
+	
+	long leftArray[leftArrayLength];
+	long rightArray[rightArrayLength];
+	
+	for(int i = 0; i < mid; i++) {
+		leftArray[i] = unsortedArray[i];
+	}
+	for(int i = mid; i < arrayLength; i++) {
+		rightArray[i - mid] = unsortedArray[i];
+	}
+	
+	mergeSort(leftArray, leftArrayLength);
+	mergeSort(rightArray, rightArrayLength);
+	merge(unsortedArray, leftArray, leftArrayLength, rightArray, rightArrayLength);
+}
+
+void merge(long unsortedArray[], long leftArray[], int leftArrayLength, long rightArray[], int rightArrayLength)
+{
+	int leftIndex = 0;
+	int rightIndex = 0;
+	int resultArrayIndex = 0;
+	
+	while((leftIndex < leftArrayLength) and (rightIndex < rightArrayLength)) {
+		if(leftArray[leftIndex] < rightArray[rightIndex]) {
+			unsortedArray[resultArrayIndex] = leftArray[leftIndex];
+			leftIndex++;
+			resultArrayIndex++;
+		}
+		
+		else {
+			unsortedArray[resultArrayIndex] = rightArray[rightIndex];
+			rightIndex++;
+			resultArrayIndex++;
+		}
+	}
+	
+	for(int l = leftIndex; l < leftArrayLength; l++) {
+		unsortedArray[resultArrayIndex++] = leftArray[l];
+	}
+	for(int r = rightIndex; r < rightArrayLength; r++) {
+		unsortedArray[resultArrayIndex++] = rightArray[r];
 	}
 }
 
@@ -300,7 +362,7 @@ bool binarySearch(long requiredHash, long sortedHashsArray[], int arrayLength)
 	return flag;
 }
 
-double getMatchesPercentage(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber)
+double getMatchesPercentage(long textWordsHashsArray[], long fragmentWordsHashsArray[], int textWordsNumber, int fragmentWordsNumber)
 {
 	int shinglesMatch = 0;
 	int shingleLength = 3;
@@ -311,33 +373,26 @@ double getMatchesPercentage(string textWordsArray[], string fragmentWordsArray[]
 	
 	int textShinglesNumber = textWordsNumber - shingleLength + 1;
 	int fragmentShinglesNumber = fragmentWordsNumber - shingleLength + 1;
-
-	for (int i = 0; i < fragmentShinglesNumber; i++) {
-		for (int j = 0; j < textShinglesNumber; j++) {
-			int wordsMatch = getWordsMatch(shingleLength, i, j, textWordsArray, fragmentWordsArray);
-			
-			if (wordsMatch == shingleLength) {
-				shinglesMatch++;
-				break;
-			}		
+	
+	long textShinglesArray[textShinglesNumber];
+	long fragmentShinglesArray[fragmentShinglesNumber];
+	
+	getShinglesHashsArray(textWordsHashsArray, textShinglesNumber, shingleLength, textShinglesArray);
+	getShinglesHashsArray(fragmentWordsHashsArray, fragmentShinglesNumber, shingleLength, fragmentShinglesArray);
+	
+	mergeSort(textShinglesArray, textShinglesNumber);
+	
+	for(int i = 0; i < fragmentShinglesNumber; i++) {
+		bool isFound = binarySearch(fragmentShinglesArray[i], textShinglesArray, textShinglesNumber);
+		
+		if(isFound) {
+			shinglesMatch++;
 		}
 	}
 	
 	return getPercentage(shinglesMatch, fragmentShinglesNumber);		
 }
 
-int getWordsMatch(int shingleLength, int i, int j, string textWordsArray[], string fragmentWordsArray[])
-{
-	int wordsMatch = 0;
-			
-	for (int k = 0; k < shingleLength; k++) {
-		if (fragmentWordsArray[i + k] == textWordsArray[j + k]) {
-			wordsMatch++;
-		}
-	}
-	
-	return wordsMatch;
-}
 
 double getPercentage(int shinglesMatch, int fragmentShinglesNumber)
 {
