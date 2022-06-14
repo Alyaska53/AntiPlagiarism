@@ -35,7 +35,7 @@ const string EMPTY_STRING = "";
 
 int main()
 {
-	string text = "            ....London capital            Great ............ The Britain, the the the its political, economic                cultural centre. It's  largest cities in the world. Its population is more than million people. London is situated on the river Thames. The city is very old and beautiful. It was founded more than two thousand years ago. Traditionally London is divided into several parts:  City, the West End, the East End and Westminster. The City is the oldest part of London, its financial and business centre. The heart  City  Stock Exchange. Westminster is the most important part  capital. It's administrative centre. The Houses of Parliament, the seat of the British Government, are there. It's a very beautiful building with two towers and a very big clock called Big Ben. Big Ben is really the bell which strikes every quarter of an hour. Opposite the Houses of Parliament is Westminster Abbey. It's a very beautiful church built over 900 years ago. The tombs of many great statesmen, scientists and writers are there.       ";
+	string text = " .          a    ....London capital            Great ............ The Britain, the the the its political, economic                cultural centre. It's  largest cities in the world. Its population is more than million people. London is situated on the river Thames. The city is very old and beautiful. It was founded more than two thousand years ago. Traditionally London is divided into several parts:  City, the West End, the East End and Westminster. The City is the oldest part of London, its financial and business centre. The heart  City  Stock Exchange. Westminster is the most important part  capital. It's administrative centre. The Houses of Parliament, the seat of the British Government, are there. It's a very beautiful building with two towers and a very big clock called Big Ben. Big Ben is really the bell which strikes every quarter of an hour. Opposite the Houses of Parliament is Westminster Abbey. It's a very beautiful church built over 900 years ago. The tombs of many great statesmen, scientists and writers are there.       ";
 	string fragment = "         Minsk  capital  Belarus, its political, economic and cultural centre. It's one  largest cities in the world. Its population is more than million people. London is situated on the river Thames. The city is very old and beautiful. It was founded more than two thousand years ago. Traditionally London is divided into several parts: the City, the West End,  East End and Westminster.  City   oldest part of London, its financial and business centre. The heart of the City is the Stock Exchange. Westminster is the most important part of the capital. It's the administrative centre. Houses of Parliament, the seat of the British Government, are there. It's a very beautiful building with two towers and a very big clock called Big Ben. Hello World!           ";
  	
 	cout << "Plagiarism percentage: " << antiPlagiarism(text, fragment) << "%";
@@ -238,8 +238,7 @@ long RSHash(string str)
     int a = 63689;
     long hash = 0;
     
-    for(int i = 0; i < getLength(str); i++)
-    {
+    for (int i = 0; i < getLength(str); i++) {
         hash = hash * a + (int)str[i];
         a    = a * b;
     }
@@ -252,8 +251,7 @@ long getShingleHash(string textWordsArray[], int shingleLength, int startIndex)
     long hash = 0;
     string shingle = EMPTY_STRING;
     
-    for(int i = 0; i < shingleLength; i++)
-    {
+    for (int i = 0; i < shingleLength; i++) {
         shingle = shingle + textWordsArray[startIndex + i];
     }
     
@@ -263,14 +261,14 @@ long getShingleHash(string textWordsArray[], int shingleLength, int startIndex)
 
 void getShinglesHashsArray(string textWordsArray[], int textShinglesNumber, int shingleLength, long shinglesHashsArray[]) 
 {
-	for(int i = 0; i < textShinglesNumber; i++) {
+	for (int i = 0; i < textShinglesNumber; i++) {
 		shinglesHashsArray[i] = getShingleHash(textWordsArray, shingleLength, i);
 	}
 }
 
 void mergeSort(long unsortedArray[], int arrayLength)
 {
-	if(arrayLength == 1) {
+	if (arrayLength == 1) {
 		return;
 	}
 	
@@ -281,10 +279,10 @@ void mergeSort(long unsortedArray[], int arrayLength)
 	long leftArray[leftArrayLength];
 	long rightArray[rightArrayLength];
 	
-	for(int i = 0; i < mid; i++) {
+	for (int i = 0; i < mid; i++) {
 		leftArray[i] = unsortedArray[i];
 	}
-	for(int i = mid; i < arrayLength; i++) {
+	for (int i = mid; i < arrayLength; i++) {
 		rightArray[i - mid] = unsortedArray[i];
 	}
 	
@@ -299,7 +297,7 @@ void merge(long unsortedArray[], long leftArray[], int leftArrayLength, long rig
 	int rightIndex = 0;
 	int resultArrayIndex = 0;
 	
-	while((leftIndex < leftArrayLength) and (rightIndex < rightArrayLength)) {
+	while ((leftIndex < leftArrayLength) and (rightIndex < rightArrayLength)) {
 		if(leftArray[leftIndex] < rightArray[rightIndex]) {
 			unsortedArray[resultArrayIndex] = leftArray[leftIndex];
 			leftIndex++;
@@ -313,10 +311,10 @@ void merge(long unsortedArray[], long leftArray[], int leftArrayLength, long rig
 		}
 	}
 	
-	for(int l = leftIndex; l < leftArrayLength; l++) {
+	for (int l = leftIndex; l < leftArrayLength; l++) {
 		unsortedArray[resultArrayIndex++] = leftArray[l];
 	}
-	for(int r = rightIndex; r < rightArrayLength; r++) {
+	for (int r = rightIndex; r < rightArrayLength; r++) {
 		unsortedArray[resultArrayIndex++] = rightArray[r];
 	}
 }
@@ -327,14 +325,14 @@ bool binarySearch(long requiredHash, long sortedHashsArray[], int arrayLength)
 	int leftBorder = 0;
 	int rightBorder = arrayLength - 1;
 	
-	while(leftBorder <= rightBorder) {
+	while (leftBorder <= rightBorder) {
 		int mid = (leftBorder + rightBorder) / 2;
 		
-		if(sortedHashsArray[mid] < requiredHash) {
+		if (sortedHashsArray[mid] < requiredHash) {
 			leftBorder = mid + 1;
 		}
 		
-		else if(sortedHashsArray[mid] > requiredHash) {
+		else if (sortedHashsArray[mid] > requiredHash) {
 			rightBorder = mid - 1;
 		}
 		
@@ -367,10 +365,10 @@ double getMatchesPercentage(string textWordsArray[], string fragmentWordsArray[]
 	
 	mergeSort(textShinglesArray, textShinglesNumber);
 	
-	for(int i = 0; i < fragmentShinglesNumber; i++) {
+	for (int i = 0; i < fragmentShinglesNumber; i++) {
 		bool isFound = binarySearch(fragmentShinglesArray[i], textShinglesArray, textShinglesNumber);
 		
-		if(isFound) {
+		if (isFound) {
 			shinglesMatch++;
 		}
 	}
