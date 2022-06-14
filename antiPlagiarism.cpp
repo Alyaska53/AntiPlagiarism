@@ -142,7 +142,7 @@ void toLowerCase(char canonizedText[])
 {
 	for (int i = 0; canonizedText[i] != TERMINAL_NULL; i++) {
 		if ((canonizedText[i] >= CHARACTER_A_ASCII) and (canonizedText[i] <= CHARACTER_Z_ASCII)) {
-			canonizedText[i] = canonizedText[i] + LOWERCASE_UPPERCASE_INTERVAL;
+			canonizedText[i] += LOWERCASE_UPPERCASE_INTERVAL;
 		}
 	}
 }
@@ -240,7 +240,7 @@ long RSHash(string str)
     
     for (int i = 0; i < getLength(str); i++) {
         hash = hash * a + (int)str[i];
-        a    = a * b;
+        a = a * b;
     }
     
     return hash;
@@ -252,7 +252,7 @@ long getShingleHash(string textWordsArray[], int shingleLength, int startIndex)
     string shingle = EMPTY_STRING;
     
     for (int i = 0; i < shingleLength; i++) {
-        shingle = shingle + textWordsArray[startIndex + i];
+        shingle += textWordsArray[startIndex + i];
     }
     
     hash = RSHash(shingle);  
@@ -282,6 +282,7 @@ void mergeSort(long unsortedArray[], int arrayLength)
 	for (int i = 0; i < mid; i++) {
 		leftArray[i] = unsortedArray[i];
 	}
+	
 	for (int i = mid; i < arrayLength; i++) {
 		rightArray[i - mid] = unsortedArray[i];
 	}
@@ -314,6 +315,7 @@ void merge(long unsortedArray[], long leftArray[], int leftArrayLength, long rig
 	for (int l = leftIndex; l < leftArrayLength; l++) {
 		unsortedArray[resultArrayIndex++] = leftArray[l];
 	}
+	
 	for (int r = rightIndex; r < rightArrayLength; r++) {
 		unsortedArray[resultArrayIndex++] = rightArray[r];
 	}
