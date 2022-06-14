@@ -9,13 +9,13 @@ bool isSeparator(char c);
 bool isNumber(char c);
 bool isSmallWord(string word);
 bool isWrongWord(string word);
-void cutSeparators(string text, char canonizedText[]);
-void cutWrongWords(char canonizedText[]);
+void cutSeparators(string text, char canonizedString[]);
+void cutWrongWords(char canonizedString[]);
 int getLength(string text);
-void toLowerCase(char canonizedText[]) ;
-void canonize(string text, char canonizedText[]);
-int getWordsNumber(char canonizedText[]);
-void fillArray(string textWordsArray[], char canonizedText[]);
+void toLowerCase(char canonizedString[]) ;
+void canonize(string text, char canonizedString[]);
+int getWordsNumber(char canonizedString[]);
+void fillArray(string textWordsArray[], char canonizedString[]);
 double getMatchesPercentage(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber);
 int getWordsMatch(int shingleLength, int i, int j, string textWordsArray[], string fragmentWordsArray[]);
 double getPercentage(int coincidences, int fragmentWordsNumber);
@@ -29,8 +29,11 @@ const string EMPTY_STRING = "";
 
 int main()
 {
-	string text = "            ....London capital            Great ............ The Britain, the the the its political, economic                cultural centre. It's  largest cities in the world. Its population is more than million people. London is situated on the river Thames. The city is very old and beautiful. It was founded more than two thousand years ago. Traditionally London is divided into several parts:  City, the West End, the East End and Westminster. The City is the oldest part of London, its financial and business centre. The heart  City  Stock Exchange. Westminster is the most important part  capital. It's administrative centre. The Houses of Parliament, the seat of the British Government, are there. It's a very beautiful building with two towers and a very big clock called Big Ben. Big Ben is really the bell which strikes every quarter of an hour. Opposite the Houses of Parliament is Westminster Abbey. It's a very beautiful church built over 900 years ago. The tombs of many great statesmen, scientists and writers are there.       ";
-	string fragment = "         Minsk  capital  Belarus, its political, economic and cultural centre. It's one  largest cities in the world. Its population is more than million people. London is situated on the river Thames. The city is very old and beautiful. It was founded more than two thousand years ago. Traditionally London is divided into several parts: the City, the West End,  East End and Westminster.  City   oldest part of London, its financial and business centre. The heart of the City is the Stock Exchange. Westminster is the most important part of the capital. It's the administrative centre. Houses of Parliament, the seat of the British Government, are there. It's a very beautiful building with two towers and a very big clock called Big Ben. Hello World!           ";
+	//string text = "            ....London capital            Great ............ The Britain, the the the its political, economic                cultural centre. It's  largest cities in the world. Its population is more than million people. London is situated on the river Thames. The city is very old and beautiful. It was founded more than two thousand years ago. Traditionally London is divided into several parts:  City, the West End, the East End and Westminster. The City is the oldest part of London, its financial and business centre. The heart  City  Stock Exchange. Westminster is the most important part  capital. It's administrative centre. The Houses of Parliament, the seat of the British Government, are there. It's a very beautiful building with two towers and a very big clock called Big Ben. Big Ben is really the bell which strikes every quarter of an hour. Opposite the Houses of Parliament is Westminster Abbey. It's a very beautiful church built over 900 years ago. The tombs of many great statesmen, scientists and writers are there.       ";
+	//string fragment = "         Minsk  capital  Belarus, its political, economic and cultural centre. It's one  largest cities in the world. Its population is more than million people. London is situated on the river Thames. The city is very old and beautiful. It was founded more than two thousand years ago. Traditionally London is divided into several parts: the City, the West End,  East End and Westminster.  City   oldest part of London, its financial and business centre. The heart of the City is the Stock Exchange. Westminster is the most important part of the capital. It's the administrative centre. Houses of Parliament, the seat of the British Government, are there. It's a very beautiful building with two towers and a very big clock called Big Ben. Hello World!           ";
+ 	
+ 	string text = "This is a the table";
+ 	string fragment = "This is a the table Those is a the apple";
  	
 	cout << "Plagiarism percentage: " << antiPlagiarism(text, fragment) << "%";
 
@@ -51,6 +54,9 @@ double antiPlagiarism(string text, string fragment)
 
 	canonize(text, canonizedText);
 	canonize(fragment, canonizedFragment);
+	
+	cout << canonizedText << " AP" << endl;
+	cout << canonizedFragment << " AP" << endl;
 
 	int textWordsNumber = getWordsNumber(canonizedText);
 	int fragmentWordsNumber = getWordsNumber(canonizedFragment);
@@ -121,13 +127,15 @@ bool isWrongWord(string word)
 	return false;
 }
 
-void toLowerCase(char canonizedText[]) 
+void toLowerCase(char canonizedString[]) 
 {
-	for (int i = 0; canonizedText[i] != TERMINAL_NULL; i++) {
-		if ((canonizedText[i] >= CHARACTER_A_ASCII) and (canonizedText[i] <= CHARACTER_Z_ASCII)) {
-			canonizedText[i] = canonizedText[i] + LOWERCASE_UPPERCASE_INTERVAL;
+	for (int i = 0; canonizedString[i] != TERMINAL_NULL; i++) {
+		if ((canonizedString[i] >= CHARACTER_A_ASCII) and (canonizedString[i] <= CHARACTER_Z_ASCII)) {
+			canonizedString[i] += LOWERCASE_UPPERCASE_INTERVAL;
 		}
 	}
+	
+	cout << canonizedString << " lowerCase" << endl;
 }
 
 int getLength(string text)
@@ -141,44 +149,46 @@ int getLength(string text)
 	return counter;
 }
 
-void cutSeparators(string text, char canonizedText[])
+void cutSeparators(string text, char canonizedString[])
 {
 	int index = 0;
 	
 	for (int i = 0; text[i] != TERMINAL_NULL; i++) {
 		if (!isSeparator(text[i]) and !isNumber(text[i])) {
-				canonizedText[index] = text[i];
+				canonizedString[index] = text[i];
 				index++;
 			
-			if (isSeparator(text[i + 1]) or isNumber(text[i + 1]) or text[i + 1] == TERMINAL_NULL) {
-				canonizedText[index] = SPACE;
+			if (isSeparator(text[i + 1]) or isNumber(text[i + 1])) {
+				canonizedString[index] = SPACE;
 				index++;
 			}
 		}
 	}
 	
-	canonizedText[index] = TERMINAL_NULL;
+	cout << canonizedString << " cutSep 1" << endl;
+	canonizedString[index] = TERMINAL_NULL;
+	cout << canonizedString << " cutSep 2" << endl;
 }
 
-void cutWrongWords(char canonizedText[])
+void cutWrongWords(char canonizedString[])
 {
 	int index = 0;
 	string word = EMPTY_STRING;
 	
-	for (int i = 0; canonizedText[i] != TERMINAL_NULL; i++) {
-		if (canonizedText[i] != SPACE) {
-			word += canonizedText[i];
+	for (int i = 0; canonizedString[i] != TERMINAL_NULL; i++) {
+		if (canonizedString[i] != SPACE) {
+			word += canonizedString[i];
 			
-			if (canonizedText[i + 1] == SPACE or canonizedText[i + 1] == TERMINAL_NULL) {
+			if (canonizedString[i + 1] == SPACE or canonizedString[i + 1] == TERMINAL_NULL) {
 				if (!isSmallWord(word) and !isWrongWord(word)) {
 					int wordLength = getLength(word);
 				
 					for (int i = 0; i < wordLength; i++) {
-						canonizedText[index] = word[i];
+						canonizedString[index] = word[i];
 						index++;
 					}
 					
-					canonizedText[index] = SPACE;
+					canonizedString[index] = SPACE;
 					index++;
 				}
 				
@@ -187,22 +197,26 @@ void cutWrongWords(char canonizedText[])
 		}
 	}
 	
-	canonizedText[index] = TERMINAL_NULL;
+	cout << canonizedString << " cutWrongWords 1" << endl;
+	canonizedString[index] = TERMINAL_NULL;
+	cout << canonizedString << " cutWrongWords 2" << endl;
 }
 
-void canonize(string text, char canonizedText[])
+void canonize(string text, char canonizedString[])
 {
-	cutSeparators(text, canonizedText);
-	toLowerCase(canonizedText);
-	cutWrongWords(canonizedText);
+	cutSeparators(text, canonizedString);
+	toLowerCase(canonizedString);
+	cutWrongWords(canonizedString);
+	
+	cout << canonizedString << " canonize" << endl;
 }
 
-int getWordsNumber(char canonizedText[])
+int getWordsNumber(char canonizedString[])
 {
 	int wordsCounter = 0;
 
-	for (int i = 0; canonizedText[i] != TERMINAL_NULL; i++) {
-		if (canonizedText[i] == SPACE or canonizedText[i + 1] == TERMINAL_NULL) {
+	for (int i = 0; canonizedString[i] != TERMINAL_NULL; i++) {
+		if (canonizedString[i] == SPACE or canonizedString[i + 1] == TERMINAL_NULL) {
 			wordsCounter++;
 		}
 	}
