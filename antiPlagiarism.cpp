@@ -18,10 +18,10 @@ int getWordsNumber(char canonizedText[]);
 void fillArray(string textWordsArray[], char canonizedText[]);
 long RSHash(string str);
 long getShingleHash(string textWordsArray[], int shingleLength, int startIndex);
-void getShinglesHashsArray(string textWordsArray[], int textShinglesNumber, int shingleLength, long shinglesHashsArray[]); 
+void getShinglesHashesArray(string textWordsArray[], int textShinglesNumber, int shingleLength, long shinglesHashesArray[]); 
 void mergeSort(long unsortedArray[], int arrayLength);
 void merge(long unsortedArray[], long leftArray[], int leftArrayLength, long rightArray[], int rightArrayLength);
-bool binarySearch(long requiredHash, long sortedHashsArray[], int arrayLength);
+bool binarySearch(long requiredHash, long sortedHashesArray[], int arrayLength);
 double getMatchesPercentage(string textWordsArray[], string fragmentWordsArray[], int textWordsNumber, int fragmentWordsNumber);
 double getPercentage(int coincidences, int fragmentWordsNumber);
 
@@ -234,35 +234,35 @@ void fillArray(string textWordsArray[], char canonizedText[])
 
 long RSHash(string str)  
 {  
-    int b = 378551;
-    int a = 63689;
-    long hash = 0;
-    
-    for (int i = 0; i < getLength(str); i++) {
-        hash = hash * a + (int)str[i];
-        a = a * b;
-    }
-    
-    return hash;
+	int b = 378551;
+	int a = 63689;
+	long hash = 0;
+		
+	for (int i = 0; i < getLength(str); i++) {
+		hash = hash * a + (int)str[i];
+		a = a * b;
+	}
+		
+	return hash;
 }
 
 long getShingleHash(string textWordsArray[], int shingleLength, int startIndex)
 {
-    long hash = 0;
-    string shingle = EMPTY_STRING;
-    
-    for (int i = 0; i < shingleLength; i++) {
-        shingle += textWordsArray[startIndex + i];
-    }
-    
-    hash = RSHash(shingle);  
-    return hash;
+	long hash = 0;
+	string shingle = EMPTY_STRING;
+		
+	for (int i = 0; i < shingleLength; i++) {
+		shingle += textWordsArray[startIndex + i];
+	}
+		
+	hash = RSHash(shingle);  
+	return hash;
 }
 
-void getShinglesHashsArray(string textWordsArray[], int textShinglesNumber, int shingleLength, long shinglesHashsArray[]) 
+void getShinglesHashesArray(string textWordsArray[], int textShinglesNumber, int shingleLength, long shinglesHashesArray[]) 
 {
 	for (int i = 0; i < textShinglesNumber; i++) {
-		shinglesHashsArray[i] = getShingleHash(textWordsArray, shingleLength, i);
+		shinglesHashesArray[i] = getShingleHash(textWordsArray, shingleLength, i);
 	}
 }
 
@@ -321,7 +321,7 @@ void merge(long unsortedArray[], long leftArray[], int leftArrayLength, long rig
 	}
 }
 
-bool binarySearch(long requiredHash, long sortedHashsArray[], int arrayLength)
+bool binarySearch(long requiredHash, long sortedHashesArray[], int arrayLength)
 {
 	bool flag = false;
 	int leftBorder = 0;
@@ -330,15 +330,15 @@ bool binarySearch(long requiredHash, long sortedHashsArray[], int arrayLength)
 	while (leftBorder <= rightBorder) {
 		int mid = (leftBorder + rightBorder) / 2;
 		
-		if (sortedHashsArray[mid] < requiredHash) {
+		if (sortedHashesArray[mid] < requiredHash) {
 			leftBorder = mid + 1;
 		}
 		
-		else if (sortedHashsArray[mid] > requiredHash) {
+		else if (sortedHashesArray[mid] > requiredHash) {
 			rightBorder = mid - 1;
 		}
 		
-		else if (sortedHashsArray[mid] == requiredHash) {
+		else if (sortedHashesArray[mid] == requiredHash) {
 			flag = true;
 			break;
 		}
@@ -362,8 +362,8 @@ double getMatchesPercentage(string textWordsArray[], string fragmentWordsArray[]
 	long textShinglesArray[textShinglesNumber];
 	long fragmentShinglesArray[fragmentShinglesNumber];
 	
-	getShinglesHashsArray(textWordsArray, textShinglesNumber, shingleLength, textShinglesArray);
-	getShinglesHashsArray(fragmentWordsArray, fragmentShinglesNumber, shingleLength, fragmentShinglesArray);
+	getShinglesHashesArray(textWordsArray, textShinglesNumber, shingleLength, textShinglesArray);
+	getShinglesHashesArray(fragmentWordsArray, fragmentShinglesNumber, shingleLength, fragmentShinglesArray);
 	
 	mergeSort(textShinglesArray, textShinglesNumber);
 	
